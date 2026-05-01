@@ -1422,7 +1422,7 @@ async function startCheckout() {
   btn.textContent = '⏳ Loading…';
 
   try {
-    const res = await fetch('http://localhost:3000/create-checkout-session', {
+    const res = await fetch('https://soc2ready-production.up.railway.app/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userData.email, company: userData.company })
