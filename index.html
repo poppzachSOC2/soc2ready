@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC 2 Readiness Assessment | Built by a Former SOC Auditor</title>
+<style>
+:root {
+  --blue-50: #EFF6FF;
+  --blue-100: #DBEAFE;
+  --blue-500: #3B82F6;
+  --blue-600: #2563EB;
+  --blue-700: #1D4ED8;
+  --blue-900: #1E3A5F;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --green-50: #F0FDF4;
+  --green-100: #DCFCE7;
+  --green-500: #22C55E;
+  --green-700: #15803D;
+  --yellow-50: #FEFCE8;
+  --yellow-100: #FEF9C3;
+  --yellow-500: #EAB308;
+  --yellow-700: #A16207;
+  --orange-50: #FFF7ED;
+  --orange-100: #FFEDD5;
+  --orange-500: #F97316;
+  --orange-700: #C2410C;
+  --red-50: #FFF1F2;
+  --red-100: #FFE4E6;
+  --red-500: #EF4444;
+  --red-700: #B91C1C;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  line-height: 1.6;
+}
+
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+.container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+/* ── NAV ── */
+.nav {
+  background: #fff;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo { font-size: 18px; font-weight: 700; color: var(--blue-600); }
+.nav-badge {
+  font-size: 11px;
+  background: var(--blue-50);
+  color: var(--blue-700);
+  border: 1px solid var(--blue-100);
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-weight: 600;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .15s ease;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--blue-600);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--blue-700); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.3); }
+.btn-secondary {
+  background: #fff;
+  color: var(--blue-600);
+  border: 2px solid var(--blue-600);
+}
+.btn-secondary:hover { background: var(--blue-50); }
+.btn-lg { padding: 18px 36px; font-size: 18px; border-radius: 12px; }
+.btn-full { width: 100%; }
+
+/* ── SCREEN 1: LANDING ── */
+#screen1 { background: var(--blue-900); }
+
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  color: #fff;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.9);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin-bottom: 28px;
+  letter-spacing: .03em;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -.02em;
+}
+.hero h1 span { color: #60A5FA; }
+.hero-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,.75);
+  max-width: 560px;
+  margin: 0 auto 36px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.hero-stat { text-align: center; }
+.hero-stat strong { display: block; font-size: 32px; font-weight: 800; color: #fff; }
+.hero-stat span { font-size: 13px; color: rgba(255,255,255,.6); }
+
+.features-section {
+  background: #fff;
+  padding: 64px 24px;
+}
+.features-section h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: var(--gray-900);
+}
+.features-grid {
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.feature-card {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 24px;
+}
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--blue-100);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 20px;
+}
+.feature-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-card p { font-size: 14px; color: var(--gray-500); }
+
+.testimonials-section {
+  background: var(--blue-50);
+  padding: 64px 24px;
+}
+.testimonials-section h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+.testimonials-grid {
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.testimonial {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  border: 1px solid var(--blue-100);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.testimonial-stars { color: #F59E0B; font-size: 18px; margin-bottom: 14px; }
+.testimonial p { font-size: 15px; color: var(--gray-700); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.author-avatar {
+  width: 42px; height: 42px;
+  border-radius: 99px;
+  background: var(--blue-600);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.author-info strong { display: block; font-size: 14px; font-weight: 700; }
+.author-info span { font-size: 13px; color: var(--gray-500); }
+
+.landing-cta {
+  text-align: center;
+  padding: 64px 24px;
+  background: var(--gray-900);
+  color: #fff;
+}
+.landing-cta h2 { font-size: 30px; font-weight: 700; margin-bottom: 12px; }
+.landing-cta p { color: var(--gray-400); margin-bottom: 32px; font-size: 16px; }
+
+/* ── SCREEN 2: EMAIL GATE ── */
+#screen2 {
+  background: linear-gradient(135deg, var(--blue-900) 0%, #1e40af 100%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+#screen2.active { display: flex; min-height: 100vh; }
+
+.form-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.2);
+}
+.form-card h2 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.form-card .form-sub { color: var(--gray-500); font-size: 15px; margin-bottom: 32px; }
+
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--gray-900);
+  background: var(--gray-50);
+  transition: border-color .15s;
+  font-family: inherit;
+}
+.form-input:focus { outline: none; border-color: var(--blue-500); background: #fff; }
+.form-input.error { border-color: var(--red-500); }
+.form-error { font-size: 13px; color: var(--red-500); margin-top: 4px; display: none; }
+.form-error.visible { display: block; }
+
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--gray-900);
+  background: var(--gray-50);
+  font-family: inherit;
+  cursor: pointer;
+}
+.form-select:focus { outline: none; border-color: var(--blue-500); }
+
+.form-note { font-size: 12px; color: var(--gray-400); text-align: center; margin-top: 16px; }
+
+/* ── SCREEN 3: QUESTIONS ── */
+#screen3 { background: var(--gray-50); }
+
+.question-header {
+  background: var(--blue-900);
+  padding: 24px;
+  color: #fff;
+}
+.question-header-top {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.q-domain-label { font-size: 13px; font-weight: 600; color: #93C5FD; letter-spacing: .05em; text-transform: uppercase; }
+.q-counter { font-size: 14px; color: rgba(255,255,255,.6); }
+
+.progress-track {
+  max-width: 700px;
+  margin: 0 auto;
+  height: 6px;
+  background: rgba(255,255,255,.2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: #60A5FA;
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+
+.question-body {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+.question-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 32px;
+  line-height: 1.4;
+}
+
+.options-list { display: flex; flex-direction: column; gap: 12px; }
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all .15s ease;
+  font-family: inherit;
+}
+.option-btn:hover { border-color: var(--blue-500); background: var(--blue-50); }
+.option-btn.selected { border-color: var(--blue-600); background: var(--blue-50); }
+
+.option-score {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 99px;
+  background: var(--gray-100);
+  border: 2px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500);
+  transition: all .15s;
+}
+.option-btn.selected .option-score {
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+  color: #fff;
+}
+.option-text { font-size: 15px; color: var(--gray-700); line-height: 1.5; padding-top: 2px; }
+
+.question-nav {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.q-nav-hint { font-size: 13px; color: var(--gray-400); }
+
+/* ── SCREEN 4: PAYWALL ── */
+#screen4 { background: var(--gray-50); }
+
+.paywall-hero {
+  background: var(--blue-900);
+  color: #fff;
+  text-align: center;
+  padding: 60px 24px 80px;
+}
+.paywall-hero h2 { font-size: 30px; font-weight: 700; margin-bottom: 8px; }
+.paywall-hero p { color: rgba(255,255,255,.7); font-size: 16px; margin-bottom: 36px; }
+
+.score-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 16px 36px;
+  margin-bottom: 24px;
+}
+.score-badge .pct { font-size: 64px; font-weight: 900; line-height: 1; }
+.score-badge .pct-sym { font-size: 28px; font-weight: 700; color: rgba(255,255,255,.7); }
+
+.tier-pill {
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+
+.paywall-body { max-width: 780px; margin: -40px auto 0; padding: 0 24px 60px; }
+
+.domain-preview-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.domain-preview-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 20px; color: var(--gray-900); }
+
+.domain-rows { position: relative; }
+.domain-row { margin-bottom: 16px; }
+.domain-row-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+.domain-bar-track { height: 10px; background: var(--gray-100); border-radius: 99px; overflow: hidden; }
+.domain-bar-fill { height: 100%; border-radius: 99px; transition: width .6s ease; }
+
+.blur-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(255,255,255,.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  gap: 10px;
+}
+.blur-overlay .lock-icon { font-size: 36px; }
+.blur-overlay p { font-size: 14px; color: var(--gray-600); font-weight: 600; }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.pricing-card {
+  background: #fff;
+  border: 2px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 28px;
+}
+.pricing-card.featured {
+  border-color: var(--blue-600);
+  box-shadow: 0 8px 30px rgba(37,99,235,.15);
+}
+.pricing-card-badge {
+  display: inline-block;
+  background: var(--blue-600);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-bottom: 12px;
+  letter-spacing: .05em;
+}
+.pricing-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.pricing-card .price { font-size: 36px; font-weight: 900; color: var(--blue-600); margin: 12px 0; }
+.pricing-card .price span { font-size: 16px; font-weight: 400; color: var(--gray-500); }
+.pricing-card ul { list-style: none; margin-bottom: 24px; }
+.pricing-card ul li {
+  font-size: 14px;
+  color: var(--gray-600);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pricing-card ul li::before { content: '✓'; color: var(--green-500); font-weight: 700; flex-shrink: 0; }
+.pricing-card ul li.blurred-item::before { content: '🔒'; }
+.pricing-card ul li.blurred-item { color: var(--gray-400); }
+
+.basic-results { display: none; margin-top: 24px; }
+.basic-results.visible { display: block; }
+.basic-results h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+.finding-item {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.finding-badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: .04em;
+  margin-top: 2px;
+}
+.finding-badge.critical { background: var(--red-100); color: var(--red-700); }
+.finding-badge.major { background: var(--orange-100); color: var(--orange-700); }
+.finding-badge.moderate { background: var(--yellow-100); color: var(--yellow-700); }
+.finding-badge.good { background: var(--green-100); color: var(--green-700); }
+.finding-text { font-size: 14px; color: var(--gray-700); line-height: 1.5; }
+.finding-domain { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+/* ── SCREEN 5: RESULTS ── */
+#screen5 { background: var(--gray-50); }
+
+.results-header {
+  background: var(--blue-900);
+  padding: 48px 24px;
+  text-align: center;
+  color: #fff;
+}
+.results-header h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.results-header p { color: rgba(255,255,255,.7); margin-bottom: 40px; }
+
+.score-circle-wrap { display: flex; justify-content: center; margin-bottom: 16px; }
+.score-svg { transform: rotate(-90deg); }
+.score-track { fill: none; stroke: rgba(255,255,255,.15); }
+.score-fill { fill: none; stroke: #60A5FA; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1); }
+.score-text-group { dominant-baseline: central; text-anchor: middle; }
+.score-main { font-size: 42px; font-weight: 900; fill: #fff; }
+.score-sub { font-size: 14px; fill: rgba(255,255,255,.6); }
+
+.results-body { max-width: 780px; margin: 0 auto; padding: 40px 24px 60px; }
+
+.results-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.results-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--gray-900); }
+
+.domain-breakdown { display: flex; flex-direction: column; gap: 18px; }
+.db-row {}
+.db-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.db-name { font-size: 14px; font-weight: 600; color: var(--gray-700); }
+.db-pct { font-size: 14px; font-weight: 700; }
+.db-bar-track { height: 12px; background: var(--gray-100); border-radius: 99px; overflow: hidden; }
+.db-bar-fill { height: 100%; border-radius: 99px; transition: width .8s ease; width: 0%; }
+
+.findings-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.ai-section-inner {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 12px;
+  padding: 24px;
+}
+.ai-loading { text-align: center; color: var(--gray-500); font-size: 15px; padding: 24px 0; }
+.ai-loading .spinner {
+  display: inline-block;
+  width: 24px; height: 24px;
+  border: 3px solid var(--blue-200);
+  border-top-color: var(--blue-600);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin-bottom: 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.ai-content { white-space: pre-wrap; font-size: 15px; color: var(--gray-700); line-height: 1.75; }
+.ai-error { color: var(--red-500); font-size: 14px; }
+.ai-note { font-size: 12px; color: var(--gray-400); margin-top: 12px; font-style: italic; }
+
+/* ── MISC ── */
+.section-divider { border: none; border-top: 1px solid var(--gray-200); margin: 0; }
+
+@media (max-width: 520px) {
+  /* ── Hero ── */
+  .hero { padding: 44px 20px 36px; }
+  .hero-eyebrow { font-size: 11px; padding: 5px 10px; letter-spacing: .01em; }
+  .hero h1 { font-size: 26px; }
+  .hero-sub { font-size: 15px; margin-bottom: 28px; }
+
+  /* Stats: 3-column grid so they never orphan-wrap */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 32px;
+  }
+  .hero-stat {
+    padding: 0 10px;
+    border-right: 1px solid rgba(255,255,255,.2);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat strong { font-size: 22px; }
+  .hero-stat span { font-size: 11px; }
+
+  /* CTA buttons full-width on mobile */
+  .hero .btn { width: 100%; font-size: 16px; padding: 16px 20px; }
+  .landing-cta .btn { width: 100%; font-size: 16px; padding: 16px 20px; }
+
+  /* ── Sections ── */
+  .features-section { padding: 48px 20px; }
+  .features-section h2 { font-size: 22px; margin-bottom: 24px; }
+  .features-grid { grid-template-columns: 1fr; }
+
+  .testimonials-section { padding: 48px 20px; }
+  .testimonials-section h2 { font-size: 22px; margin-bottom: 24px; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+
+  .landing-cta { padding: 48px 20px; }
+  .landing-cta h2 { font-size: 24px; }
+
+  /* ── Screen 2: Form ── */
+  #screen2 { padding: 24px 16px; align-items: flex-start; }
+  .form-card { padding: 28px 20px; border-radius: 16px; }
+  .form-card h2 { font-size: 22px; }
+
+  /* ── Screen 3: Questions ── */
+  .question-body { padding: 28px 20px; }
+  .question-text { font-size: 18px; margin-bottom: 20px; }
+  .option-btn { padding: 14px 14px; gap: 10px; }
+  .option-text { font-size: 14px; }
+  /* Hide hint text so Back / Next aren't crowded */
+  .question-nav { padding: 0 20px 36px; }
+  .q-nav-hint { display: none; }
+
+  /* ── Screen 4: Paywall ── */
+  .paywall-hero { padding: 36px 20px 56px; }
+  .paywall-hero h2 { font-size: 22px; }
+  .paywall-hero p { font-size: 14px; margin-bottom: 24px; }
+  .score-badge { padding: 12px 24px; }
+  .score-badge .pct { font-size: 52px; }
+  .score-badge .pct-sym { font-size: 22px; }
+  /* Reduce negative pull so card doesn't clip */
+  .paywall-body { margin-top: -24px; padding: 0 16px 48px; }
+  .domain-preview-card { padding: 20px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-card { padding: 22px 18px; }
+
+  /* ── Screen 5: Results ── */
+  .results-header { padding: 36px 20px; }
+  .results-header h2 { font-size: 22px; }
+  .results-body { padding: 28px 16px 48px; }
+  .results-card { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ SCREEN 1: LANDING ════════════════ -->
+<div id="screen1" class="screen active">
+  <nav class="nav">
+    <span class="nav-logo">SOC2Ready</span>
+    <span class="nav-badge">Former Big 10 Auditor</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">⚡ Free · Takes 5 Minutes · No Login Required</div>
+    <h1>Find out if your startup is<br><span>ready for SOC 2</span><br>in 5 minutes</h1>
+    <p class="hero-sub">Built by a former Big 10 SOC auditor. Get an honest gap assessment across all five Trust Services Criteria — without paying $40,000 for a consultant to tell you what you don't have.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>15</strong><span>Expert-crafted questions</span></div>
+      <div class="hero-stat"><strong>5 TSC</strong><span>Domains covered</span></div>
+      <div class="hero-stat"><strong>$40K+</strong><span>Saved vs. hiring a consultant</span></div>
+    </div>
+    <button class="btn btn-primary btn-lg" onclick="showScreen(2)">Start Free Assessment →</button>
+  </div>
+
+  <section class="features-section">
+    <h2>What you'll walk away with</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Scored Readiness Report</h3>
+        <p>Get an overall SOC 2 readiness score and see exactly how you stack up across all five Trust Services Criteria.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Domain-by-Domain Gap Analysis</h3>
+        <p>Identify your weakest areas in Security, Availability, Confidentiality, Processing Integrity, and Privacy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI-Powered Recommendations</h3>
+        <p>Receive a prioritized action plan generated by AI, grounded in real audit experience and your specific answers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Audit-Ready Language</h3>
+        <p>Every finding is written in the language your future auditor will use — so you know exactly what to fix before they arrive.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <h2>What startup CTOs are saying</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"We thought we were 70% ready for SOC 2. This assessment showed us we were closer to 40%. It saved us from a failed audit and at least $15k in surprise remediation costs."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div class="author-info">
+            <strong>Marcus R.</strong>
+            <span>CTO · Fintech SaaS startup (Series A)</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"The questions are written by someone who actually does SOC 2 audits — not a generic compliance checklist. The AI recommendations alone were worth more than the $49 price tag."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JL</div>
+          <div class="author-info">
+            <strong>Jess L.</strong>
+            <span>Co-founder & CTO · HR tech startup (Seed)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="landing-cta">
+    <div class="container">
+      <h2>Know where you stand before your auditor does</h2>
+      <p>Free to start. Full report for $49. No subscription. No fluff.</p>
+      <button class="btn btn-primary btn-lg" onclick="showScreen(2)">Start Free Assessment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ SCREEN 2: EMAIL GATE ════════════════ -->
+<div id="screen2" class="screen">
+  <div class="form-card">
+    <h2>Before we begin</h2>
+    <p class="form-sub">Your results are confidential. We'll send your report here.</p>
+    <div class="form-group">
+      <label class="form-label" for="field-name">Full Name *</label>
+      <input id="field-name" type="text" class="form-input" placeholder="Jane Smith" autocomplete="name">
+      <div id="err-name" class="form-error">Please enter your full name.</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="field-email">Work Email *</label>
+      <input id="field-email" type="email" class="form-input" placeholder="jane@yourcompany.com" autocomplete="email">
+      <div id="err-email" class="form-error">Please enter a valid work email.</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="field-company">Company Name</label>
+      <input id="field-company" type="text" class="form-input" placeholder="Acme Inc." autocomplete="organization">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="field-role">Your Role</label>
+      <select id="field-role" class="form-select">
+        <option value="">Select role...</option>
+        <option value="CTO">CTO / VP Engineering</option>
+        <option value="CISO">CISO / Security Lead</option>
+        <option value="CEO">CEO / Co-founder</option>
+        <option value="Engineering Manager">Engineering Manager</option>
+        <option value="DevOps / Platform">DevOps / Platform Engineer</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="submitEmailGate()">Start Assessment →</button>
+    <p class="form-note">🔒 We never share your information. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- ════════════════ SCREEN 3: QUESTIONS ════════════════ -->
+<div id="screen3" class="screen">
+  <div class="question-header">
+    <div class="question-header-top">
+      <span id="q-domain" class="q-domain-label">Security</span>
+      <span id="q-counter" class="q-counter">Question 1 of 15</span>
+    </div>
+    <div class="progress-track">
+      <div id="progress-fill" class="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="question-body">
+    <div id="q-text" class="question-text"></div>
+    <div id="q-options" class="options-list"></div>
+  </div>
+
+  <div class="question-nav">
+    <button id="q-back-btn" class="btn btn-secondary" onclick="prevQuestion()" style="visibility:hidden">← Back</button>
+    <span id="q-nav-hint" class="q-nav-hint">Select an answer to continue</span>
+    <button id="q-next-btn" class="btn btn-primary" onclick="nextQuestion()" disabled>Next →</button>
+  </div>
+</div>
+
+<!-- ════════════════ SCREEN 4: PAYWALL ════════════════ -->
+<div id="screen4" class="screen">
+  <div class="paywall-hero">
+    <h2>Your SOC 2 Readiness Score</h2>
+    <p>Here's how your startup performed across the five Trust Services Criteria.</p>
+    <div class="score-badge">
+      <span id="pw-score" class="pct">0</span>
+      <span class="pct-sym">%</span>
+    </div>
+    <br>
+    <span id="pw-tier" class="tier-pill"></span>
+  </div>
+
+  <div class="paywall-body">
+    <div class="domain-preview-card">
+      <h3>Domain Score Breakdown</h3>
+      <div class="domain-rows" id="domain-rows-preview">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Basic Report</h3>
+        <div class="price">Free</div>
+        <ul>
+          <li>Overall readiness score</li>
+          <li>Your top 3 critical findings</li>
+          <li class="blurred-item">Full domain breakdown</li>
+          <li class="blurred-item">All findings & remediation steps</li>
+          <li class="blurred-item">AI-powered action plan</li>
+          <li class="blurred-item">Audit-ready evidence checklist</li>
+        </ul>
+        <button class="btn btn-secondary btn-full" onclick="showBasicReport()">Get Basic Report</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-card-badge">RECOMMENDED</div>
+        <h3>Full Report</h3>
+        <div class="price">$49 <span>one-time</span></div>
+        <ul>
+          <li>Everything in Basic</li>
+          <li>Full domain-by-domain breakdown</li>
+          <li>All 15 findings with remediation steps</li>
+          <li>AI-powered prioritized action plan</li>
+          <li>Audit-ready evidence checklist</li>
+          <li>Instant PDF-ready results</li>
+        </ul>
+        <button class="btn btn-primary btn-full" id="stripe-btn" onclick="startCheckout()">Get Full Report — $49 →</button>
+        <p style="font-size:12px;color:var(--gray-400);text-align:center;margin-top:12px;">Secure payment via Stripe</p>
+      </div>
+    </div>
+
+    <div id="basic-results" class="basic-results">
+      <h3>Your Top 3 Critical Findings</h3>
+      <div id="basic-findings-list"></div>
+      <p style="font-size:14px;color:var(--gray-500);margin-top:16px;">Want all findings, remediation steps, and an AI action plan? Upgrade to the Full Report for $49.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ SCREEN 5: RESULTS (FULL) ════════════════ -->
+<div id="screen5" class="screen">
+  <div class="results-header">
+    <h2>Your Full SOC 2 Readiness Report</h2>
+    <p id="results-sub">Detailed analysis across all five Trust Services Criteria</p>
+    <div class="score-circle-wrap">
+      <svg class="score-svg" width="180" height="180" viewBox="0 0 180 180">
+        <circle class="score-track" cx="90" cy="90" r="70" stroke-width="12"/>
+        <circle id="score-arc" class="score-fill" cx="90" cy="90" r="70" stroke-width="12"
+          stroke-dasharray="439.82"
+          stroke-dashoffset="439.82"/>
+        <g class="score-text-group" transform="rotate(90, 90, 90)">
+          <text id="result-pct-text" class="score-main" x="90" y="84">0%</text>
+          <text class="score-sub" x="90" y="108">Readiness Score</text>
+        </g>
+      </svg>
+    </div>
+    <span id="result-tier" class="tier-pill"></span>
+  </div>
+
+  <div class="results-body">
+
+    <div class="results-card">
+      <h3>Domain Breakdown</h3>
+      <div class="domain-breakdown" id="domain-breakdown"></div>
+    </div>
+
+    <div class="results-card">
+      <h3>All Findings</h3>
+      <div class="findings-grid" id="all-findings"></div>
+    </div>
+
+    <div class="results-card">
+      <h3>🤖 AI-Powered Action Plan</h3>
+      <div class="ai-section-inner">
+        <div id="ai-content">
+          <div class="ai-loading">
+            <div class="spinner"></div>
+            <p>Generating your personalized action plan…</p>
+          </div>
+        </div>
+      </div>
+      <p class="ai-note">Generated by Claude AI based on your specific answers. Not a substitute for professional audit advice.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────
+// WARNING: Storing API keys in client-side code exposes them publicly.
+// For production, proxy this call through your Express backend.
+const ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY';
+const ANTHROPIC_MODEL   = 'claude-sonnet-4-20250514';
+
+// ── QUESTIONS DATA ──────────────────────────────────────────────
+const questions = [
+  // Security (0-4)
+  {
+    domain: 'Security',
+    text: 'Does your organization have a documented security policy?',
+    options: [
+      'No security policy exists',
+      'Informal practices exist, but nothing is documented',
+      'Policy is documented but not regularly reviewed or enforced',
+      'Documented policy, actively enforced, reviewed at least annually'
+    ],
+    findings: [
+      'No security policy — a foundational requirement for every SOC 2 audit',
+      'Undocumented security practices cannot be tested or demonstrated to an auditor',
+      'Security policy exists but lacks an enforcement and review cadence',
+      null
+    ]
+  },
+  {
+    domain: 'Security',
+    text: 'How do you manage user access to systems and data?',
+    options: [
+      'No formal access control process',
+      'Access is granted ad-hoc with no reviews or audit trail',
+      'Access process is documented but reviews are infrequent or inconsistent',
+      'Formal process with least-privilege enforcement and periodic access reviews'
+    ],
+    findings: [
+      'No access control process — a critical gap across all SOC 2 criteria',
+      'Ad-hoc access management lacks the audit trail required by SOC 2',
+      'Access reviews are inconsistent — auditors expect a defined cadence',
+      null
+    ]
+  },
+  {
+    domain: 'Security',
+    text: 'Do you enforce multi-factor authentication (MFA)?',
+    options: [
+      'MFA is not used anywhere',
+      'MFA is available but entirely optional',
+      'MFA is required for some critical systems only',
+      'MFA is required and enforced across all systems and remote access'
+    ],
+    findings: [
+      'No MFA in place — one of the most commonly cited SOC 2 deficiencies',
+      'Optional MFA is insufficient; enforcement by policy is required',
+      'MFA is not consistently applied — all critical systems must be covered',
+      null
+    ]
+  },
+  {
+    domain: 'Security',
+    text: 'How do you handle software and system patching?',
+    options: [
+      'No patch management process exists',
+      'Patches are applied ad-hoc when issues arise',
+      'Regular patching schedule exists but tracking and exceptions are informal',
+      'Documented patch process with defined SLAs, tracking, and exception handling'
+    ],
+    findings: [
+      'No patch management — leaves systems vulnerable and fails SOC 2 CC7.1',
+      'Ad-hoc patching cannot demonstrate continuous vulnerability management',
+      'Patch process lacks formal SLA tracking and exception documentation',
+      null
+    ]
+  },
+  {
+    domain: 'Security',
+    text: 'Do employees receive security awareness training?',
+    options: [
+      'No security training is provided',
+      'Occasional informal guidance only — nothing structured',
+      'Annual training exists but lacks testing or completion tracking',
+      'Regular training with phishing simulations, completion tracking, and new-hire onboarding'
+    ],
+    findings: [
+      'No security training — employees are the top attack vector and a required SOC 2 control',
+      'Informal training cannot be evidenced for auditors',
+      'Training program needs documented completion records and effectiveness testing',
+      null
+    ]
+  },
+  // Availability (5-7)
+  {
+    domain: 'Availability',
+    text: 'Do you have a documented incident response plan?',
+    options: [
+      'No incident response plan exists',
+      'Basic steps are known but not documented anywhere',
+      'Plan is documented but has never been tested or rehearsed',
+      'Documented plan with defined roles, tested annually, and updated after incidents'
+    ],
+    findings: [
+      'No incident response plan — directly required by SOC 2 Availability criteria',
+      'Undocumented response procedures will fail under audit scrutiny',
+      'An untested incident response plan provides false confidence',
+      null
+    ]
+  },
+  {
+    domain: 'Availability',
+    text: 'How do you monitor system uptime and performance?',
+    options: [
+      'No monitoring is in place',
+      'Manual checks only — no automated alerts',
+      'Some automated monitoring exists but coverage and SLAs are undefined',
+      'Comprehensive monitoring with automated alerts, dashboards, and defined uptime SLAs'
+    ],
+    findings: [
+      'No system monitoring — availability issues go undetected and unaddressed',
+      'Manual monitoring cannot demonstrate continuous availability assurance to auditors',
+      'Monitoring lacks defined SLA targets and comprehensive coverage',
+      null
+    ]
+  },
+  {
+    domain: 'Availability',
+    text: 'Do you have a tested disaster recovery (DR) plan?',
+    options: [
+      'No DR plan and no backups',
+      'Backups exist but there is no formal recovery plan',
+      'DR plan is documented but has never been tested',
+      'Tested DR plan with defined RTO/RPO targets, validated at least annually'
+    ],
+    findings: [
+      'No disaster recovery plan or backups — a critical availability and business risk',
+      'Backups without a tested recovery plan leave recovery time unknown',
+      'DR plan without testing cannot demonstrate recoverability to an auditor',
+      null
+    ]
+  },
+  // Confidentiality (8-10)
+  {
+    domain: 'Confidentiality',
+    text: 'How do you protect sensitive data using encryption?',
+    options: [
+      'No encryption is used',
+      'Some data is encrypted, but coverage is inconsistent',
+      'Encryption at rest OR in transit — but not both',
+      'Encryption at rest and in transit for all sensitive data, with documented key management'
+    ],
+    findings: [
+      'No encryption in use — a critical confidentiality failure',
+      'Inconsistent encryption leaves sensitive data exposed',
+      'Encryption must be applied at both rest and transit to satisfy SOC 2',
+      null
+    ]
+  },
+  {
+    domain: 'Confidentiality',
+    text: 'Do you have a data classification policy?',
+    options: [
+      'No data classification exists',
+      'Team informally knows what is sensitive — nothing is documented',
+      'Classification policy exists but is not consistently applied',
+      'Formal tiered classification scheme with defined handling requirements per tier'
+    ],
+    findings: [
+      'No data classification — you cannot protect what you have not identified',
+      'Informal classification cannot be evidenced during an audit',
+      'Classification policy is not being consistently applied across the organization',
+      null
+    ]
+  },
+  {
+    domain: 'Confidentiality',
+    text: 'How do you manage third-party vendor security risk?',
+    options: [
+      'No vendor review process of any kind',
+      'Basic checks (website review or Google search) before signing contracts',
+      'Security questionnaires sent to key vendors, but no ongoing review',
+      'Formal vendor risk program with tiered assessments, contracts, and annual reviews'
+    ],
+    findings: [
+      'No vendor risk program — third parties are among the top sources of data breaches',
+      'Informal vendor checks are insufficient for SOC 2 third-party management requirements',
+      'Vendor security is not reviewed ongoing — risk can change significantly after onboarding',
+      null
+    ]
+  },
+  // Processing Integrity (11-12)
+  {
+    domain: 'Processing Integrity',
+    text: 'How do you manage changes to production systems?',
+    options: [
+      'No change management process — anyone can deploy anything',
+      'Changes are deployed ad-hoc by individual developers',
+      'Informal review happens but there are no formal approvals or rollback plans',
+      'Formal change management with documented approvals, testing, rollback plans, and audit trail'
+    ],
+    findings: [
+      'No change management — unauthorized changes are a direct SOC 2 Processing Integrity gap',
+      'Ad-hoc deployments cannot demonstrate the controls required for SOC 2',
+      'Change process lacks formal approvals and rollback documentation for auditor evidence',
+      null
+    ]
+  },
+  {
+    domain: 'Processing Integrity',
+    text: 'How do you ensure data is processed accurately and completely?',
+    options: [
+      'No data validation is in place',
+      'Basic input validation exists but nothing more',
+      'Validation with some manual reconciliation — limited audit trail',
+      'Automated validation, error handling, reconciliation processes, and full audit trail'
+    ],
+    findings: [
+      'No data validation — processing errors go undetected and unresolved',
+      'Basic validation is insufficient to demonstrate processing integrity under SOC 2',
+      'Validation lacks the audit trail required as evidence for SOC 2 PI criteria',
+      null
+    ]
+  },
+  // Privacy (13-14)
+  {
+    domain: 'Privacy',
+    text: 'Does your organization have a publicly available privacy policy?',
+    options: [
+      'No privacy policy exists',
+      'Basic policy exists but is not publicly available',
+      'Public policy exists but is not regularly reviewed or aligned to regulations like GDPR or CCPA',
+      'Comprehensive, publicly available policy aligned to applicable regulations, reviewed annually'
+    ],
+    findings: [
+      'No privacy policy — a baseline requirement for SOC 2 Privacy criteria',
+      'A privacy policy that is not publicly accessible fails transparency requirements',
+      'Privacy policy must be aligned to applicable regulations and reviewed on a defined cadence',
+      null
+    ]
+  },
+  {
+    domain: 'Privacy',
+    text: 'How do you handle data subject requests (access, deletion, correction)?',
+    options: [
+      'No process — we do not handle these requests',
+      'Requests are handled ad-hoc if one happens to come in',
+      'A basic process exists but has no defined SLAs or documentation',
+      'Formal process with defined SLAs, documented workflow, and tracked responses'
+    ],
+    findings: [
+      'No data subject request process — a gap under GDPR, CCPA, and SOC 2 Privacy criteria',
+      'Ad-hoc handling creates inconsistency and significant compliance risk',
+      'Process lacks defined SLAs and documentation needed for audit evidence',
+      null
+    ]
+  }
+];
+
+const DOMAIN_RANGES = {
+  'Security':             [0, 4],
+  'Availability':         [5, 7],
+  'Confidentiality':      [8, 10],
+  'Processing Integrity': [11, 12],
+  'Privacy':              [13, 14]
+};
+
+const DOMAIN_COLORS = {
+  'Security':             '#2563EB',
+  'Availability':         '#7C3AED',
+  'Confidentiality':      '#0891B2',
+  'Processing Integrity': '#059669',
+  'Privacy':              '#D97706'
+};
+
+// ── STATE ───────────────────────────────────────────────────────
+let userData    = { name: '', email: '', company: '', role: '' };
+let answers     = new Array(15).fill(null);
+let currentQ    = 0;
+
+// ── NAVIGATION ──────────────────────────────────────────────────
+function showScreen(n) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen' + n).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── SCREEN 2: EMAIL GATE ────────────────────────────────────────
+function submitEmailGate() {
+  const nameEl  = document.getElementById('field-name');
+  const emailEl = document.getElementById('field-email');
+  let valid = true;
+
+  if (!nameEl.value.trim()) {
+    nameEl.classList.add('error');
+    document.getElementById('err-name').classList.add('visible');
+    valid = false;
+  } else {
+    nameEl.classList.remove('error');
+    document.getElementById('err-name').classList.remove('visible');
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailEl.value.trim() || !emailRegex.test(emailEl.value.trim())) {
+    emailEl.classList.add('error');
+    document.getElementById('err-email').classList.add('visible');
+    valid = false;
+  } else {
+    emailEl.classList.remove('error');
+    document.getElementById('err-email').classList.remove('visible');
+  }
+
+  if (!valid) return;
+
+  userData = {
+    name:    nameEl.value.trim(),
+    email:   emailEl.value.trim(),
+    company: document.getElementById('field-company').value.trim() || 'Your Company',
+    role:    document.getElementById('field-role').value || 'Not specified'
+  };
+
+  answers   = new Array(15).fill(null);
+  currentQ  = 0;
+  renderQuestion();
+  showScreen(3);
+}
+
+// ── SCREEN 3: QUESTIONS ─────────────────────────────────────────
+function renderQuestion() {
+  const q = questions[currentQ];
+
+  document.getElementById('q-domain').textContent  = q.domain;
+  document.getElementById('q-counter').textContent = `Question ${currentQ + 1} of ${questions.length}`;
+  document.getElementById('progress-fill').style.width = `${(currentQ / questions.length) * 100}%`;
+  document.getElementById('q-text').textContent    = q.text;
+
+  const optList = document.getElementById('q-options');
+  optList.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (answers[currentQ] === i ? ' selected' : '');
+    btn.innerHTML = `<span class="option-score">${i}</span><span class="option-text">${opt}</span>`;
+    btn.addEventListener('click', () => selectOption(i));
+    optList.appendChild(btn);
+  });
+
+  const nextBtn = document.getElementById('q-next-btn');
+  nextBtn.disabled = answers[currentQ] === null;
+  nextBtn.textContent = currentQ === questions.length - 1 ? 'See My Score →' : 'Next →';
+
+  document.getElementById('q-back-btn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  document.getElementById('q-nav-hint').textContent = answers[currentQ] !== null ? '' : 'Select an answer to continue';
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  document.querySelectorAll('.option-btn').forEach((btn, idx) => {
+    btn.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('q-next-btn').disabled = false;
+  document.getElementById('q-nav-hint').textContent = '';
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+    window.scrollTo(0, 0);
+  } else {
+    buildPaywall();
+    showScreen(4);
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+    window.scrollTo(0, 0);
+  }
+}
+
+// ── SCORE CALCULATIONS ──────────────────────────────────────────
+function calcScores() {
+  const domainScores = {};
+  let totalEarned = 0, totalMax = 0;
+
+  Object.entries(DOMAIN_RANGES).forEach(([domain, [start, end]]) => {
+    let earned = 0, max = (end - start + 1) * 3;
+    for (let i = start; i <= end; i++) {
+      if (answers[i] !== null) earned += answers[i];
+    }
+    domainScores[domain] = { earned, max, pct: Math.round((earned / max) * 100) };
+    totalEarned += earned;
+    totalMax    += max;
+  });
+
+  return { domainScores, overall: Math.round((totalEarned / totalMax) * 100) };
+}
+
+function getTier(pct) {
+  if (pct >= 85) return { label: 'SOC 2 Ready',       color: '#15803D', bg: '#DCFCE7' };
+  if (pct >= 65) return { label: 'Nearly Ready',       color: '#1D4ED8', bg: '#DBEAFE' };
+  if (pct >= 40) return { label: 'Partially Ready',    color: '#A16207', bg: '#FEF9C3' };
+  if (pct >= 20) return { label: 'Developing',         color: '#C2410C', bg: '#FFEDD5' };
+  return              { label: 'Significant Gaps',     color: '#B91C1C', bg: '#FFE4E6' };
+}
+
+function getBarColor(pct) {
+  if (pct >= 75) return '#22C55E';
+  if (pct >= 50) return '#3B82F6';
+  if (pct >= 30) return '#F59E0B';
+  return '#EF4444';
+}
+
+function getSeverityBadge(score) {
+  if (score === 0) return { label: 'CRITICAL', cls: 'critical' };
+  if (score === 1) return { label: 'MAJOR',    cls: 'major' };
+  return                  { label: 'MODERATE', cls: 'moderate' };
+}
+
+// ── SCREEN 4: PAYWALL ───────────────────────────────────────────
+function buildPaywall() {
+  const { domainScores, overall } = calcScores();
+  const tier = getTier(overall);
+
+  document.getElementById('pw-score').textContent = overall;
+  const tierEl = document.getElementById('pw-tier');
+  tierEl.textContent = tier.label;
+  tierEl.style.background = tier.bg;
+  tierEl.style.color = tier.color;
+
+  // Domain preview rows (blurred)
+  const container = document.getElementById('domain-rows-preview');
+  let html = '';
+  Object.entries(domainScores).forEach(([domain, { pct }]) => {
+    html += `
+      <div class="domain-row">
+        <div class="domain-row-header">
+          <span>${domain}</span>
+          <span style="color:${getBarColor(pct)}">${pct}%</span>
+        </div>
+        <div class="domain-bar-track">
+          <div class="domain-bar-fill" style="width:${pct}%;background:${getBarColor(pct)}"></div>
+        </div>
+      </div>`;
+  });
+  html += `<div class="blur-overlay"><span class="lock-icon">🔒</span><p>Unlock with Full Report</p></div>`;
+  container.innerHTML = html;
+
+  // Persist to localStorage for post-Stripe redirect
+  localStorage.setItem('soc2_userData', JSON.stringify(userData));
+  localStorage.setItem('soc2_answers',  JSON.stringify(answers));
+}
+
+function showBasicReport() {
+  const findings = getAllFindings().filter(f => f.score < 3);
+  findings.sort((a, b) => a.score - b.score);
+  const top3 = findings.slice(0, 3);
+
+  const container = document.getElementById('basic-findings-list');
+  container.innerHTML = top3.map(f => {
+    const sev = getSeverityBadge(f.score);
+    return `
+      <div class="finding-item">
+        <span class="finding-badge ${sev.cls}">${sev.label}</span>
+        <div>
+          <div class="finding-text">${f.text}</div>
+          <div class="finding-domain">${f.domain}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('basic-results').classList.add('visible');
+  document.getElementById('basic-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function getAllFindings() {
+  const findings = [];
+  answers.forEach((score, i) => {
+    if (score === null) return;
+    const q = questions[i];
+    const text = q.findings[score];
+    if (text) findings.push({ domain: q.domain, score, text });
+  });
+  return findings;
+}
+
+async function startCheckout() {
+  const btn = document.getElementById('stripe-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Loading…';
+
+  try {
+    const res = await fetch('http://localhost:3000/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userData.email, company: userData.company })
+    });
+    const data = await res.json();
+    if (data.url) {
+      btn.textContent = 'Redirecting to Stripe…';
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'No URL returned');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Get Full Report — $49 →';
+    alert('Could not start checkout: ' + err.message);
+  }
+}
+
+// ── SCREEN 5: FULL RESULTS ──────────────────────────────────────
+function buildFullResults() {
+  const { domainScores, overall } = calcScores();
+  const tier = getTier(overall);
+  const CIRC = 439.82;
+
+  // Header
+  document.getElementById('result-pct-text').textContent = overall + '%';
+  const tierEl = document.getElementById('result-tier');
+  tierEl.textContent = tier.label;
+  tierEl.style.background = tier.bg;
+  tierEl.style.color = tier.color;
+  document.getElementById('results-sub').textContent =
+    `${userData.name ? userData.name + ' · ' : ''}${userData.company} · Detailed analysis across all five Trust Services Criteria`;
+
+  // Animate circle
+  const arc = document.getElementById('score-arc');
+  arc.style.strokeDashoffset = CIRC;
+  setTimeout(() => {
+    arc.style.strokeDashoffset = CIRC - (CIRC * overall / 100);
+  }, 100);
+
+  // Domain breakdown bars
+  const breakdown = document.getElementById('domain-breakdown');
+  breakdown.innerHTML = Object.entries(domainScores).map(([domain, { pct }]) => `
+    <div class="db-row">
+      <div class="db-header">
+        <span class="db-name">${domain}</span>
+        <span class="db-pct" style="color:${getBarColor(pct)}">${pct}%</span>
+      </div>
+      <div class="db-bar-track">
+        <div class="db-bar-fill" id="bar-${domain.replace(/\s/g,'-')}" style="background:${getBarColor(pct)}"></div>
+      </div>
+    </div>`).join('');
+
+  setTimeout(() => {
+    Object.entries(domainScores).forEach(([domain, { pct }]) => {
+      const el = document.getElementById('bar-' + domain.replace(/\s/g, '-'));
+      if (el) el.style.width = pct + '%';
+    });
+  }, 200);
+
+  // All findings
+  const allFindings = getAllFindings();
+  const findingsEl  = document.getElementById('all-findings');
+  if (allFindings.length === 0) {
+    findingsEl.innerHTML = '<p style="color:var(--green-700);font-weight:600">🎉 No significant gaps found — you appear well-prepared for SOC 2!</p>';
+  } else {
+    allFindings.sort((a, b) => a.score - b.score);
+    findingsEl.innerHTML = allFindings.map(f => {
+      const sev = getSeverityBadge(f.score);
+      return `
+        <div class="finding-item">
+          <span class="finding-badge ${sev.cls}">${sev.label}</span>
+          <div>
+            <div class="finding-text">${f.text}</div>
+            <div class="finding-domain">${f.domain}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // AI recommendations
+  callAnthropicAPI(domainScores, overall, allFindings);
+}
+
+async function callAnthropicAPI(domainScores, overall, findings) {
+  const aiEl = document.getElementById('ai-content');
+
+  const domainSummary = Object.entries(domainScores)
+    .map(([d, { pct }]) => `- ${d}: ${pct}%`)
+    .join('\n');
+
+  const findingsSummary = findings.length
+    ? findings.map(f => `- [${getSeverityBadge(f.score).label}] ${f.domain}: ${f.text}`).join('\n')
+    : '- No significant gaps identified';
+
+  const prompt = `You are a former Big 10 SOC 2 auditor helping a startup prepare for their first SOC 2 Type II audit.
+
+A startup has completed a SOC 2 readiness self-assessment. Here are their results:
+
+**Overall Readiness Score:** ${overall}%
+
+**Domain Scores:**
+${domainSummary}
+
+**Identified Gaps:**
+${findingsSummary}
+
+**Company:** ${userData.company}
+**Role who completed assessment:** ${userData.role}
+
+Please provide a concise, prioritized action plan with:
+1. A 1-2 sentence honest assessment of their readiness
+2. Their top 3 highest-priority remediation actions (with brief rationale for each)
+3. A realistic timeline estimate to reach SOC 2 readiness from their current state
+4. One "quick win" they can implement this week
+
+Keep your response practical, specific, and under 400 words. Write in plain language — avoid excessive jargon. Format with clear headers.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: ANTHROPIC_MODEL,
+        max_tokens: 600,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || `API error ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'No response received.';
+    aiEl.innerHTML = `<div class="ai-content">${escapeHtml(text)}</div>`;
+  } catch (err) {
+    aiEl.innerHTML = `<div class="ai-error">⚠️ Could not load AI recommendations: ${escapeHtml(err.message)}<br><br>
+      Make sure <code>ANTHROPIC_API_KEY</code> is set in index.html and the model ID is valid.</div>`;
+  }
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── INIT: CHECK FOR STRIPE REDIRECT ─────────────────────────────
+(function init() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('session_id')) {
+    // Restore state from localStorage
+    try {
+      const savedUser    = localStorage.getItem('soc2_userData');
+      const savedAnswers = localStorage.getItem('soc2_answers');
+      if (savedUser)    userData = JSON.parse(savedUser);
+      if (savedAnswers) answers  = JSON.parse(savedAnswers);
+    } catch (e) {}
+
+    showScreen(5);
+    buildFullResults();
+  }
+})();
+</script>
+</body>
+</html>
